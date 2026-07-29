@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Feeka 104 Panel</title>
+<link rel="stylesheet" href="css/panel.css">
+</head>
+
+<body>
+
+<div class="logo">
+    <img src="img/logo_feeka_104.png" alt="Feeka 104">
+</div>
+
+<h2>🟢 Ahora sonando</h2>
+
+<div class="contenedor-player">
+
+    <div class="lado-derecho">
+
+        <div id="qr-info">
+
+            <h2>🎵 PIDE TU CANCIÓN</h2>
+
+            <img src="img/qr.png" alt="Código QR">
+
+            <p>📱 Escanea el código QR</p>
+
+            <p>✔ Busca tu canción</p>
+
+            <p>✔ Envíala</p>
+
+            <p>✔ Entra automáticamente a la cola</p>
+
+        </div>
+
+        <div id="actual">
+            <p>No hay ninguna canción reproduciéndose.</p>
+        </div>
+
+    </div>
+
+    <div id="player"></div>
+
+</div>
+
+<h2> ⏭ EN ESPERA </h2>
+
+<table>
+<thead>
+<tr>
+
+<th>Artista</th>
+<th>Canción</th>
+<th>Usuario</th>
+<th>Acción</th>
+
+</tr>
+</thead>
+
+<tbody id="lista">
+</tbody>
+</table>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="js/panel.js"></script>
+</body>
+</html>
