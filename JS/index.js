@@ -1,4 +1,4 @@
-const URL_SERVER = "http://localhost:3000";
+const URL_SERVER = window.location.origin;
 
 const SUPABASE_URL = "https://pzfcaypdorwhohkxvnyu.supabase.co";
 
