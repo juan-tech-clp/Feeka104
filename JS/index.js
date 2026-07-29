@@ -1,4 +1,4 @@
-const URL_SERVER = "http://localhost:3000";
+const URL_SERVER = "https://tu-app.onrender.com";
 
 const SUPABASE_URL = "https://pzfcaypdorwhohkxvnyu.supabase.co";
 
