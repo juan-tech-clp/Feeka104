@@ -1,4 +1,3 @@
-const URL_SERVER = "http://localhost:3000";
 const URL_SERVER = "https://feeka104.onrender.com/";
 
 const SUPABASE_URL = "https://pzfcaypdorwhohkxvnyu.supabase.co";
