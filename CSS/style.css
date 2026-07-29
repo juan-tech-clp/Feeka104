@@ -1,36 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
-
-:root{
-    --bg:#12081A;
-    --card:#1E1030;
-    --card-hover:#2A1745;
-    --pink:#FF3D8A;
-    --gold:#FFB020;
-    --text:#F5E9FF;
-    --text-muted:#B8A9CC;
-    --success:#2FE38A;
-}
-
-*{
-    box-sizing:border-box;
-}
-
 body{
     margin:0;
-    font-family:'Inter',Arial,Helvetica,sans-serif;
-    color:var(--text);
-    background:
-        radial-gradient(circle at 15% 0%, rgba(255,61,138,.18), transparent 45%),
-        radial-gradient(circle at 85% 20%, rgba(255,176,32,.14), transparent 50%),
-        var(--bg);
-    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#090909;
+    color:white;
 }
 
 .container{
     width:95%;
     max-width:650px;
     margin:auto;
-    padding:24px 20px 40px;
+    padding:20px;
     text-align:center;
 }
 
@@ -42,45 +21,24 @@ body{
     width:220px;
     margin:20px auto;
     display:block;
-    filter:drop-shadow(0 0 18px rgba(255,61,138,.35));
 }
 
 h2{
-    margin:0 0 6px;
+    margin:0;
+    color:#00e5ff;
     text-align:center;
-    font-family:'Fredoka',sans-serif;
-    font-size:32px;
+    font-size:30px;
     font-weight:700;
-    letter-spacing:.5px;
-    background:linear-gradient(90deg, var(--gold), var(--pink));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    text-shadow:0 0 30px rgba(255,61,138,.25);
 }
 
 input{
     width:100%;
     box-sizing:border-box;
-    padding:16px 18px;
-    margin:14px 0;
-    border:1.5px solid transparent;
-    border-radius:14px;
+    padding:15px;
+    margin:10px 0;
+    border:none;
+    border-radius:12px;
     font-size:16px;
-    font-family:'Inter',sans-serif;
-    background:var(--card);
-    color:var(--text);
-    outline:none;
-    transition:.2s ease;
-}
-
-input::placeholder{
-    color:var(--text-muted);
-}
-
-input:focus{
-    border-color:var(--pink);
-    box-shadow:0 0 0 4px rgba(255,61,138,.15), 0 0 20px rgba(255,61,138,.25);
 }
 
 button{
@@ -88,31 +46,15 @@ button{
     padding:16px;
     border:none;
     border-radius:30px;
-    background:linear-gradient(90deg, var(--pink), var(--gold));
-    color:#12081A;
-    font-size:17px;
-    font-family:'Fredoka',sans-serif;
-    font-weight:600;
-    letter-spacing:.3px;
+    background:#00e5ff;
+    color:#000;
+    font-size:18px;
+    font-weight:bold;
     cursor:pointer;
-    box-shadow:0 6px 20px rgba(255,61,138,.3);
-    transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
 }
 
 button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 26px rgba(255,61,138,.4);
-}
-
-button:active{
-    transform:translateY(0);
-    opacity:.92;
-}
-
-button:focus-visible,
-input:focus-visible{
-    outline:2px solid var(--gold);
-    outline-offset:2px;
+    opacity:.9;
 }
 
 #resultados{
@@ -123,20 +65,16 @@ input:focus-visible{
     display:flex;
     align-items:center;
     gap:15px;
-    background:var(--card);
-    border:1.5px solid transparent;
-    border-radius:14px;
+    background:#1a1a1a;
+    border-radius:12px;
     padding:10px;
     margin-bottom:10px;
     cursor:pointer;
-    text-align:left;
-    transition:.2s ease;
+    transition:.2s;
 }
 
 .resultado:hover{
-    background:var(--card-hover);
-    border-color:rgba(255,61,138,.4);
-    transform:translateX(2px);
+    background:#2b2b2b;
 }
 
 .resultado img{
@@ -144,55 +82,34 @@ input:focus-visible{
     height:68px;
     object-fit:cover;
     border-radius:10px;
-    flex-shrink:0;
 }
 
 .resultado div{
     flex:1;
     text-align:left;
-    min-width:0;
 }
 
 .resultado b{
     display:block;
     margin-bottom:5px;
-    color:var(--text);
-    font-weight:600;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-}
-
-.resultado small{
-    color:var(--text-muted);
+    color:white;
 }
 
 #mensaje{
     margin-top:20px;
-    font-size:17px;
-    font-weight:600;
-    color:var(--success);
+    font-size:18px;
+    color:#00ff99;
 }
 
 @media(max-width:600px){
 
-    .logo img{
-        width:180px;
-    }
-
-    h2{
-        font-size:26px;
-    }
-
-    .resultado img{
-        width:110px;
-        height:62px;
-    }
-
+.logo img{
+    width:180px;
 }
 
-@media(prefers-reduced-motion: reduce){
-    *{
-        transition:none !important;
-    }
+.resultado img{
+    width:110px;
+    height:62px;
+}
+
 }
