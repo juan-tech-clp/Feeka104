@@ -37,24 +37,53 @@ app.get("/search", async (req, res) => {
                     q: q + " official audio",
                     type: "video",
                     videoCategoryId: "10",
-                    maxResults: 5,
+                    maxResults: 8,
                     key: API_KEY
                 }
             }
         );
 
+        const items = respuesta.data.items;
 
-        const resultados = respuesta.data.items.map(item => ({
+        if (items.length === 0) {
+            return res.json([]);
+        }
 
-            videoId: item.id.videoId,
+        // === Verificamos cuáles videos SÍ permiten reproducirse embebidos ===
 
-            titulo: item.snippet.title,
+        const ids = items.map(item => item.id.videoId).join(",");
 
-            canal: item.snippet.channelTitle,
+        const detalles = await axios.get(
+            "https://www.googleapis.com/youtube/v3/videos",
+            {
+                params: {
+                    part: "status",
+                    id: ids,
+                    key: API_KEY
+                }
+            }
+        );
 
-            miniatura: item.snippet.thumbnails.medium.url
+        const embebibles = new Set(
+            detalles.data.items
+                .filter(v => v.status.embeddable === true)
+                .map(v => v.id)
+        );
 
-        }));
+        const resultados = items
+            .filter(item => embebibles.has(item.id.videoId))
+            .slice(0, 5)
+            .map(item => ({
+
+                videoId: item.id.videoId,
+
+                titulo: item.snippet.title,
+
+                canal: item.snippet.channelTitle,
+
+                miniatura: item.snippet.thumbnails.medium.url
+
+            }));
 
 
         res.json(resultados);
