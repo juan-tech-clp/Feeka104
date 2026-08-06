@@ -64,13 +64,13 @@ h2{
 
 #player-area{
 
-    flex:4;
+    flex:1;
 
     display:flex;
 
     flex-direction:column;
 
-    gap:20px;
+    gap:15px;
 
 }
 
@@ -80,9 +80,14 @@ h2{
 
     aspect-ratio:16/9;
 
+    display:block;
+
     border:none;
 
-    border-radius:15px;
+    border-radius:20px;
+
+    box-shadow:
+        0 0 30px rgba(0,229,255,.30);
 
 }
 
@@ -92,22 +97,17 @@ h2{
 
 .lado-derecho{
 
-    width:340px;
+    width:260px;
+
+    min-width:260px;
 
     flex-shrink:0;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
 
 }
 
 /* TARJETAS */
 
-#qr-info,
-#actual{
+#qr-info{
 
     background:
         linear-gradient(
@@ -249,52 +249,6 @@ h2{
     text-align:center;
 
     color:#ddd;
-
-}
-
-/* ===========================
-        AHORA SONANDO
-=========================== */
-
-#actual{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-#actual h3{
-
-    color:#00e5ff;
-
-    font-size:22px;
-
-    text-align:center;
-
-    margin-bottom:10px;
-
-}
-
-#actual p{
-
-    font-size:17px;
-
-    color:#ddd;
-
-    line-height:1.6;
-
-    text-align:center;
-
-}
-
-#actual strong{
-
-    color:#ffffff;
-
-    font-weight:700;
 
 }
 
