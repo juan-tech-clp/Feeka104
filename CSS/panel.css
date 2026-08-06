@@ -133,11 +133,11 @@ h2{
 
 .logo-panel{
 
-    width:170px;
+    width:210px;
 
     display:block;
 
-    margin:0 auto 20px;
+    margin:0 auto 25px;
 
     background:transparent;
 
@@ -149,7 +149,7 @@ h2{
 
     box-shadow:none;
 
-    filter:drop-shadow(0 0 15px #00e5ff);
+    filter:drop-shadow(0 0 18px #00e5ff);
 
 }
 
