@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Feeka 104 Panel</title>
-<link rel="stylesheet" href="CSS/panel.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feeka 104 Panel</title>
+
+    <link rel="stylesheet" href="CSS/panel.css">
 </head>
 
 <body>
 
-<h2>🟢 AHORA SONANDO</h2>
-
 <div class="contenedor-player">
 
+    <!-- REPRODUCTOR -->
+    <div id="player-area">
+
+        <h2>🟢 AHORA SONANDO</h2>
+
+        <div id="player"></div>
+
+        <div id="actual">
+            <p>No hay ninguna canción reproduciéndose.</p>
+        </div>
+
+    </div>
+
+    <!-- PANEL QR -->
     <div class="lado-derecho">
 
         <div id="qr-info">
 
-            <!-- Logo dentro del panel -->
             <img class="logo-panel"
                  src="img/logo_feeka_104.png"
                  alt="Feeka 104">
 
-            <!-- Texto en movimiento -->
             <div class="marquee">
                 <div class="marquee-text">
                     🎵 ESCANEA EL QR • PIDE TU CANCIÓN • FEEKA 104 AUTODJ • LA MÚSICA DE TU NOCHE • ESCANEA EL QR • PIDE TU CANCIÓN •
                 </div>
             </div>
 
-            <!-- QR -->
             <img class="qr"
                  src="img/qr_code_panel.png"
                  alt="Código QR">
@@ -42,13 +53,7 @@
 
         </div>
 
-        <div id="actual">
-            <p>No hay ninguna canción reproduciéndose.</p>
-        </div>
-
     </div>
-
-    <div id="player"></div>
 
 </div>
 
@@ -56,19 +61,17 @@
 
 <table>
 
-<thead>
-<tr>
+    <thead>
+        <tr>
+            <th>Artista</th>
+            <th>Canción</th>
+            <th>Usuario</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
 
-<th>Artista</th>
-<th>Canción</th>
-<th>Usuario</th>
-<th>Acción</th>
-
-</tr>
-</thead>
-
-<tbody id="lista">
-</tbody>
+    <tbody id="lista">
+    </tbody>
 
 </table>
 

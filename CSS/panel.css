@@ -44,11 +44,11 @@ h2{
 
     display:flex;
 
-    flex-direction:row-reverse;
-
-    gap:25px;
+    justify-content:center;
 
     align-items:flex-start;
+
+    gap:30px;
 
 }
 
@@ -58,19 +58,19 @@ h2{
 
 #player{
 
-    flex:3;
+    width:100%;
 
-    background:#111;
+}
 
-    padding:12px;
+#player-area{
 
-    border-radius:22px;
+    flex:4;
 
-    border:1px solid rgba(0,229,255,.2);
+    display:flex;
 
-    box-shadow:
-        0 0 30px rgba(0,229,255,.12),
-        inset 0 0 20px rgba(255,255,255,.03);
+    flex-direction:column;
+
+    gap:20px;
 
 }
 
@@ -92,7 +92,9 @@ h2{
 
 .lado-derecho{
 
-    flex:1;
+    width:340px;
+
+    flex-shrink:0;
 
     display:flex;
 
@@ -474,12 +476,18 @@ button:active{
         width:100%;
 
     }
+    
 
     .lado-derecho{
 
-        width:100%;
+    width:100%;
 
-    }
+    max-width:450px;
+
+    margin:auto;
+
+}
+
 
     .logo-panel{
 
