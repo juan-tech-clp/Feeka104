@@ -14,6 +14,9 @@ app.use(express.static("."));
 
 const API_KEY = process.env.YOUTUBE_API_KEY;
 
+// Cambia esto si tu rockola no está en Colombia
+const PAIS = "CO";
+
 
 // BUSCADOR DE YOUTUBE
 app.get("/search", async (req, res) => {
@@ -49,7 +52,7 @@ app.get("/search", async (req, res) => {
             return res.json([]);
         }
 
-        // === Verificamos cuáles videos SÍ permiten reproducirse embebidos ===
+        // === Verificamos cuáles videos SÍ se pueden reproducir aquí ===
 
         const ids = items.map(item => item.id.videoId).join(",");
 
@@ -57,21 +60,43 @@ app.get("/search", async (req, res) => {
             "https://www.googleapis.com/youtube/v3/videos",
             {
                 params: {
-                    part: "status",
+                    part: "status,contentDetails",
                     id: ids,
                     key: API_KEY
                 }
             }
         );
 
-        const embebibles = new Set(
+        const disponibles = new Set(
             detalles.data.items
-                .filter(v => v.status.embeddable === true)
+                .filter(v => {
+
+                    // 1) Debe permitir reproducirse embebido
+                    if (v.status.embeddable !== true) {
+                        return false;
+                    }
+
+                    // 2) No debe estar bloqueado para nuestro país
+                    const restriccion = v.contentDetails?.regionRestriction;
+
+                    if (restriccion?.blocked?.includes(PAIS)) {
+                        return false;
+                    }
+
+                    // 3) Si el video usa "allowed" (lista blanca de países)
+                    //    y el nuestro no está en ella, también se descarta
+                    if (restriccion?.allowed && !restriccion.allowed.includes(PAIS)) {
+                        return false;
+                    }
+
+                    return true;
+
+                })
                 .map(v => v.id)
         );
 
         const resultados = items
-            .filter(item => embebibles.has(item.id.videoId))
+            .filter(item => disponibles.has(item.id.videoId))
             .slice(0, 5)
             .map(item => ({
 
