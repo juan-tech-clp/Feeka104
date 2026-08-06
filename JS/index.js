@@ -137,15 +137,13 @@ async function enviarSolicitud(){
 
     }
 
-    const usuario = document.getElementById("usuario").value.trim();
+    let usuario = document.getElementById("usuario").value.trim();
 
-    if(usuario === ""){
+     if(usuario === ""){
 
-        alert("Escribe tu nombre.");
+     usuario = "Anónimo";
 
-        return;
-
-    }
+}
 
     try{
 
@@ -190,7 +188,13 @@ async function enviarSolicitud(){
             document.getElementById("usuario").value = "";
             document.getElementById("resultados").innerHTML = "";
 
-            cancionSeleccionada = null;
+        cancionSeleccionada = null;
+
+         setTimeout(() => {
+
+         document.getElementById("mensaje").innerHTML = "";
+
+         }, 3000); 
 
         }else{
 
