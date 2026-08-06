@@ -56,32 +56,17 @@ async function buscarCanciones(){
 
     try{
 
-        // Buscamos en YouTube y Deezer al mismo tiempo
-        const [respYoutube, respDeezer] = await Promise.all([
+        const respuesta = await fetch(
+            URL_SERVER + "/search?q=" + encodeURIComponent(texto)
+        );
 
-            fetch(URL_SERVER + "/search?q=" + encodeURIComponent(texto))
-                .then(r => r.json())
-                .catch(() => []),
+        const canciones = await respuesta.json();
 
-            fetch(URL_SERVER + "/search-deezer?q=" + encodeURIComponent(texto))
-                .then(r => r.json())
-                .catch(() => [])
-
-        ]);
-
-        const cancionesYoutube = Array.isArray(respYoutube) ? respYoutube : [];
-        const cancionesDeezer = Array.isArray(respDeezer) ? respDeezer : [];
-
-        // YouTube primero (canción completa), Deezer como respaldo
-        resultadosActuales = [...cancionesYoutube, ...cancionesDeezer];
+        resultadosActuales = Array.isArray(canciones) ? canciones : [];
 
         let html = "";
 
         resultadosActuales.forEach((c, i) => {
-
-            const insignia = c.fuente === "deezer"
-                ? '<span style="color:#ff884d;font-size:12px;">🎧 Deezer · preview 30s</span>'
-                : '<span style="color:#ff2d55;font-size:12px;">▶ YouTube</span>';
 
             html += `
             <div class="resultado" data-index="${i}">
@@ -92,9 +77,7 @@ async function buscarCanciones(){
 
                     <b>${escaparHtml(c.titulo)}</b><br>
 
-                    <small>${escaparHtml(c.canal)}</small><br>
-
-                    ${insignia}
+                    <small>${escaparHtml(c.canal)}</small>
 
                 </div>
 
@@ -166,12 +149,6 @@ async function enviarSolicitud(){
 
     try{
 
-        // El campo video_id guarda el ID de YouTube o la URL de preview de Deezer,
-        // según corresponda. El campo fuente indica cuál es cuál.
-        const identificador = cancionSeleccionada.fuente === "deezer"
-            ? cancionSeleccionada.previewUrl
-            : cancionSeleccionada.videoId;
-
         const respuesta = await fetch(
 
             SUPABASE_URL + "/rest/v1/solicitudes",
@@ -193,11 +170,10 @@ async function enviarSolicitud(){
                     artista:cancionSeleccionada.canal,
                     cancion:cancionSeleccionada.titulo,
                     canal:cancionSeleccionada.canal,
-                    video_id:identificador,
+                    video_id:cancionSeleccionada.videoId,
                     thumbnail:cancionSeleccionada.miniatura,
                     usuario:usuario,
-                    estado:"pendiente",
-                    fuente:cancionSeleccionada.fuente
+                    estado:"pendiente"
 
                 })
 
