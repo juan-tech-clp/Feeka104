@@ -14,7 +14,7 @@
     <img src="img/logo_feeka_104.png" alt="Feeka 104">
 </div>
 
-<h2>🟢 Ahora sonando</h2>
+<h2>🟢 AHORA SONANDO</h2>
 
 <div class="contenedor-player">
 
@@ -22,17 +22,27 @@
 
         <div id="qr-info">
 
-            <h2>🎵 PIDE TU CANCIÓN</h2>
+            <!-- Logo dentro del panel -->
+            <img class="logo-panel"
+                 src="img/logo_feeka_104.png"
+                 alt="Feeka 104">
 
-            <img src="img/qr_code_panel.png" alt="Código QR">
+            <!-- Texto en movimiento -->
+            <div class="marquee">
+                <div class="marquee-text">
+                    🎵 ESCANEA EL QR • PIDE TU CANCIÓN • FEEKA 104 AUTODJ • LA MÚSICA DE TU NOCHE • ESCANEA EL QR • PIDE TU CANCIÓN •
+                </div>
+            </div>
+
+            <!-- QR -->
+            <img class="qr"
+                 src="img/qr_code_panel.png"
+                 alt="Código QR">
 
             <p>📱 Escanea el código QR</p>
-
-            <p>✔ Busca tu canción</p>
-
-            <p>✔ Envíala</p>
-
-            <p>✔ Entra automáticamente a la cola</p>
+            <p>🔎 Busca tu canción favorita</p>
+            <p>🎵 Envíala</p>
+            <p>🚀 Entrará automáticamente a la cola</p>
 
         </div>
 
@@ -46,9 +56,10 @@
 
 </div>
 
-<h2> ⏭ EN ESPERA </h2>
+<h2>⏭ EN ESPERA</h2>
 
 <table>
+
 <thead>
 <tr>
 
@@ -62,9 +73,11 @@
 
 <tbody id="lista">
 </tbody>
+
 </table>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="JS/panel.js"></script>
+
 </body>
 </html>
