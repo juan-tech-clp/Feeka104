@@ -453,10 +453,15 @@ button:active{
 
 }
 
-/* RESPONSIVE */
+/* ===========================
+        RESPONSIVE
+=========================== */
 
-@media(max-width:1100px){
+@media (max-width:1100px){
 
+    body{
+        padding:15px;
+    }
 
     .contenedor-player{
 
@@ -464,13 +469,11 @@ button:active{
 
     }
 
-
     #player{
 
         width:100%;
 
     }
-
 
     .lado-derecho{
 
@@ -478,10 +481,105 @@ button:active{
 
     }
 
+    .logo-panel{
 
-    #qr-info img{
+        width:150px;
+
+    }
+
+    .qr{
 
         width:220px;
+
+    }
+
+}
+
+
+@media (max-width:768px){
+
+    h2{
+
+        font-size:26px;
+
+    }
+
+    #qr-info,
+    #actual{
+
+        padding:18px;
+
+    }
+
+    #qr-info p{
+
+        font-size:16px;
+
+    }
+
+    .marquee{
+
+        font-size:14px;
+
+    }
+
+    table{
+
+        font-size:14px;
+
+        display:block;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+    }
+
+    th,
+    td{
+
+        padding:12px;
+
+    }
+
+}
+
+
+@media (max-width:480px){
+
+    body{
+
+        padding:10px;
+
+    }
+
+    h2{
+
+        font-size:22px;
+
+    }
+
+    .logo-panel{
+
+        width:130px;
+
+    }
+
+    .qr{
+
+        width:180px;
+
+    }
+
+    #qr-info p{
+
+        font-size:15px;
+
+    }
+
+    button{
+
+        width:100%;
 
     }
 
