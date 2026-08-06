@@ -22,7 +22,8 @@ window.onYouTubeIframeAPIReady = function () {
             onReady: () => {
                 console.log("Player listo");
             },
-            onStateChange: onPlayerStateChange
+            onStateChange: onPlayerStateChange,
+            onError: onPlayerError
         }
 
     });
@@ -33,6 +34,35 @@ function onPlayerStateChange(event) {
 
     if (event.data === YT.PlayerState.ENDED) {
         siguienteCancion();
+    }
+
+}
+
+function onPlayerError(event) {
+
+    console.warn("Error reproduciendo video, código:", event.data);
+
+    // Códigos 101, 150 = no permite embed | 100 = eliminado/privado
+    // 2 = ID inválido | genérico = restricción regional u otro fallo temporal
+    document.getElementById("actual").innerHTML =
+        "<p>⚠️ No se pudo reproducir esta canción, saltando a la siguiente...</p>";
+
+    siguienteCancion();
+
+}
+
+// Limpia el player cuando no hay nada que reproducir,
+// para que no se quede "congelado" mostrando el último error.
+function detenerPlayer() {
+
+    if (player && typeof player.stopVideo === "function") {
+
+        try {
+            player.stopVideo();
+        } catch (e) {
+            console.warn("No se pudo detener el player:", e);
+        }
+
     }
 
 }
@@ -96,6 +126,10 @@ async function cargarCanciones() {
         if (actual === "") {
 
             actual = "<p>No hay ninguna canción reproduciéndose.</p>";
+
+            // No hay nada activo: si el player quedó con un video
+            // cargado o mostrando error, lo detenemos para limpiarlo.
+            detenerPlayer();
 
         }
 
@@ -216,6 +250,7 @@ async function siguienteCancion() {
 
     } else {
 
+        detenerPlayer();
         cargarCanciones();
 
     }
