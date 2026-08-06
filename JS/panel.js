@@ -138,15 +138,13 @@ async function cargarCanciones() {
 
         if (videoActual && player) {
 
-            const actualVideo = player.getVideoData()?.video_id || "";
+    if (player.getPlayerState() === YT.PlayerState.UNSTARTED) {
 
-            if (actualVideo !== videoActual) {
+        player.loadVideoById(videoActual);
 
-                player.loadVideoById(videoActual);
+    }
 
-            }
-
-        }
+}
 
     } catch (e) {
 
