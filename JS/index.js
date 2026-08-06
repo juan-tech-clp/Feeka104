@@ -5,6 +5,7 @@ const SUPABASE_URL = "https://pzfcaypdorwhohkxvnyu.supabase.co";
 const SUPABASE_KEY = "sb_publishable_fUIyPY2429bVgbkWwltuGg_0gAAf0U0";
 
 let cancionSeleccionada = null;
+let resultadosActuales = []; // guardamos aquí los resultados en memoria
 
 // Buscar con botón
 document.getElementById("btnBuscar").addEventListener("click", buscarCanciones);
@@ -20,6 +21,24 @@ document.getElementById("buscar").addEventListener("keydown", function(e){
 
 // Enviar solicitud
 document.getElementById("btnEnviar").addEventListener("click", enviarSolicitud);
+
+// Escucha los clics en los resultados (delegación de eventos,
+// en vez de inyectar JSON dentro de onclick="")
+document.getElementById("resultados").addEventListener("click", function(e){
+
+    const tarjeta = e.target.closest(".resultado");
+
+    if(!tarjeta) return;
+
+    const indice = Number(tarjeta.dataset.index);
+
+    if(!Number.isNaN(indice) && resultadosActuales[indice]){
+
+        seleccionar(resultadosActuales[indice]);
+
+    }
+
+});
 
 async function buscarCanciones(){
 
@@ -37,26 +56,45 @@ async function buscarCanciones(){
 
     try{
 
-        const respuesta = await fetch(
-            URL_SERVER + "/search?q=" + encodeURIComponent(texto)
-        );
+        // Buscamos en YouTube y Deezer al mismo tiempo
+        const [respYoutube, respDeezer] = await Promise.all([
 
-        const canciones = await respuesta.json();
+            fetch(URL_SERVER + "/search?q=" + encodeURIComponent(texto))
+                .then(r => r.json())
+                .catch(() => []),
+
+            fetch(URL_SERVER + "/search-deezer?q=" + encodeURIComponent(texto))
+                .then(r => r.json())
+                .catch(() => [])
+
+        ]);
+
+        const cancionesYoutube = Array.isArray(respYoutube) ? respYoutube : [];
+        const cancionesDeezer = Array.isArray(respDeezer) ? respDeezer : [];
+
+        // YouTube primero (canción completa), Deezer como respaldo
+        resultadosActuales = [...cancionesYoutube, ...cancionesDeezer];
 
         let html = "";
 
-        canciones.forEach(c => {
+        resultadosActuales.forEach((c, i) => {
+
+            const insignia = c.fuente === "deezer"
+                ? '<span style="color:#ff884d;font-size:12px;">🎧 Deezer · preview 30s</span>'
+                : '<span style="color:#ff2d55;font-size:12px;">▶ YouTube</span>';
 
             html += `
-            <div class="resultado" onclick='seleccionar(${JSON.stringify(c)})'>
+            <div class="resultado" data-index="${i}">
 
-                <img src="${c.miniatura}" alt="Miniatura">
+                <img src="${escaparHtml(c.miniatura)}" alt="Miniatura">
 
                 <div>
 
-                    <b>${c.titulo}</b><br>
+                    <b>${escaparHtml(c.titulo)}</b><br>
 
-                    <small>${c.canal}</small>
+                    <small>${escaparHtml(c.canal)}</small><br>
+
+                    ${insignia}
 
                 </div>
 
@@ -81,6 +119,18 @@ async function buscarCanciones(){
         "<p>Error al buscar canciones.</p>";
 
     }
+
+}
+
+// Evita que títulos con <, >, & rompan el HTML al mostrarlos
+function escaparHtml(texto){
+
+    if(!texto) return "";
+
+    return texto
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
 
 }
 
@@ -116,6 +166,12 @@ async function enviarSolicitud(){
 
     try{
 
+        // El campo video_id guarda el ID de YouTube o la URL de preview de Deezer,
+        // según corresponda. El campo fuente indica cuál es cuál.
+        const identificador = cancionSeleccionada.fuente === "deezer"
+            ? cancionSeleccionada.previewUrl
+            : cancionSeleccionada.videoId;
+
         const respuesta = await fetch(
 
             SUPABASE_URL + "/rest/v1/solicitudes",
@@ -137,10 +193,11 @@ async function enviarSolicitud(){
                     artista:cancionSeleccionada.canal,
                     cancion:cancionSeleccionada.titulo,
                     canal:cancionSeleccionada.canal,
-                    video_id:cancionSeleccionada.videoId,
+                    video_id:identificador,
                     thumbnail:cancionSeleccionada.miniatura,
                     usuario:usuario,
-                    estado:"pendiente"
+                    estado:"pendiente",
+                    fuente:cancionSeleccionada.fuente
 
                 })
 
