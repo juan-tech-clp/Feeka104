@@ -38,6 +38,22 @@ h2{
 
 }
 
+.titulo-cola{
+
+    font-size:24px;
+
+    margin:30px 0 15px;
+
+    color:#00e5ff;
+
+    text-align:center;
+
+    text-shadow:0 0 8px #00e5ff;
+
+    letter-spacing:2px;
+
+}
+
 /* CONTENEDOR PRINCIPAL */
 
 .contenedor-player{
