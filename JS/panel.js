@@ -3,6 +3,7 @@ const KEY = "sb_publishable_fUIyPY2429bVgbkWwltuGg_0gAAf0U0"; // Deja aquí tu m
 
 let player = null;
 let videoActual = "";
+let videoCargado = ""; // último video que YA le pedimos al player que cargue
 
 // ======= API DE YOUTUBE =======
 window.onYouTubeIframeAPIReady = function () {
@@ -42,10 +43,12 @@ function onPlayerError(event) {
 
     console.warn("Error reproduciendo video, código:", event.data);
 
-    // Códigos 101, 150 = no permite embed | 100 = eliminado/privado
-    // 2 = ID inválido | genérico = restricción regional u otro fallo temporal
-    document.getElementById("actual").innerHTML =
-        "<p>⚠️ No se pudo reproducir esta canción, saltando a la siguiente...</p>";
+    const actualDiv = document.getElementById("actual");
+
+    if (actualDiv) {
+        actualDiv.innerHTML =
+            "<p>⚠️ No se pudo reproducir esta canción, saltando a la siguiente...</p>";
+    }
 
     siguienteCancion();
 
@@ -64,6 +67,8 @@ function detenerPlayer() {
         }
 
     }
+
+    videoCargado = "";
 
 }
 
@@ -127,8 +132,6 @@ async function cargarCanciones() {
 
             actual = "<p>No hay ninguna canción reproduciéndose.</p>";
 
-            // No hay nada activo: si el player quedó con un video
-            // cargado o mostrando error, lo detenemos para limpiarlo.
             detenerPlayer();
 
         }
@@ -136,15 +139,20 @@ async function cargarCanciones() {
         document.getElementById("actual").innerHTML = actual;
         document.getElementById("lista").innerHTML = html;
 
-        if (videoActual && player) {
+        // === Solo pedimos cargar el video si es DISTINTO al último
+        // que ya le pedimos al player (sin depender de getVideoData(),
+        // que puede tardar en reflejar el cambio y causar recargas
+        // repetidas del mismo video). ===
+        if (videoActual && player && typeof player.loadVideoById === "function") {
 
-    if (player.getPlayerState() === YT.PlayerState.UNSTARTED) {
+            if (videoActual !== videoCargado) {
 
-        player.loadVideoById(videoActual);
+                videoCargado = videoActual;
+                player.loadVideoById(videoActual);
 
-    }
+            }
 
-}
+        }
 
     } catch (e) {
 
